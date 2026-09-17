@@ -60,25 +60,6 @@
         font-size: 12px;
         color: #a6a6a6;
       }
-      #boot-loader .retry {
-        margin-top: 6px;
-        font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
-        font-size: 13px;
-        color: #3b96ff;
-        background: transparent;
-        border: 1px solid #3b3b3b;
-        border-radius: 6px;
-        padding: 6px 14px;
-        cursor: pointer;
-        display: none;
-      }
-      #boot-loader.boot-loader-stuck .retry {
-        display: inline-block;
-      }
-      #boot-loader.boot-loader-stuck .subtext {
-        max-width: 280px;
-        text-align: center;
-      }
       @keyframes boot-spin {
         to {
           transform: rotate(360deg);
@@ -91,30 +72,8 @@
       <div class="ring"></div>
       <span class="wordmark">Groove</span>
       <span class="subtext">Getting things ready&hellip;</span>
-      <button class="retry" onclick="location.reload()">Reload</button>
     </div>
     <div id="root"></div>
-    <script>
-      // Safety net: if the app bundle fails to load or throws before it
-      // can remove #boot-loader, don't leave people staring at an
-      // infinite spinner with no explanation — surface it after a bit.
-      window.addEventListener("error", function () {
-        var el = document.getElementById("boot-loader");
-        if (el) {
-          el.querySelector(".subtext").textContent =
-            "Something went wrong loading the app.";
-          el.classList.add("boot-loader-stuck");
-        }
-      });
-      setTimeout(function () {
-        var el = document.getElementById("boot-loader");
-        if (el && !el.classList.contains("boot-loader-hidden")) {
-          el.querySelector(".subtext").textContent =
-            "This is taking longer than expected.";
-          el.classList.add("boot-loader-stuck");
-        }
-      }, 8000);
-    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
